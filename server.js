@@ -12,11 +12,11 @@ if (process.env.NODE_ENV === 'prod') {
 if (process.env.NODE_ENV === 'dev') {
   dotenv.config({path: `${__dirname}/dev.env`})
 }
-//const mongoURL = process.env.MONGODB_URL.replace('<password>', process.env.MONGODB_PASSWORD)
+const mongoURL = process.env.MONGODB_URL.replace('<password>', process.env.MONGODB_PASSWORD)
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
+mongoose.connect(mongoURL).then(() => {
   console.log('DB connection successful')
   server.listen(process.env.PORT, () => {
-    console.log('Server running on port 3000')
+    console.log(`Server running on port ${process.env.PORT}`)
   })
 })
