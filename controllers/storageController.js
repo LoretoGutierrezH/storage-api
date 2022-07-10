@@ -1,7 +1,9 @@
+const { utilErrorHandler } = require('../middlewares/errorHandler')
 const Storage = require('../models/Storage')
 
 const getStorageAlternatives = async (req, res) => {
   const storageAlternatives = await Storage.find()
+
   return res.json({
     storages: storageAlternatives
   })
@@ -38,10 +40,10 @@ const updateStorage = (req, res) => {
 
 }
 
-const deleteStorage = async (req, re) => {
+const deleteStorage = async (req, res) => {
   const storageId = req.params.id
 
-  const storage = await Storage.findOneAndDelete(storageId)
+  const storage = await Storage.findByIdAndDelete(storageId)
   const remainingStorageAlternatives = await Storage.find()
 
   return res.json({
@@ -49,9 +51,27 @@ const deleteStorage = async (req, re) => {
   })
 }
 
+const getStorageImage = async (req, res, next) => {
+  const id = req.params.id
+  const storage = await Storage.findById(id)
+
+  if (!storage) {
+    const err = new Error('Not found')
+    err.statusCode = 404
+    return utilErrorHandler(storage, next, err)
+  }
+
+  res.set('Content-Type', storage.image.contentType)
+  res.send(storage.image.data)
+
+}
+
 
 
 module.exports = {
   newStorage,
-  getStorageAlternatives
+  getStorageAlternatives,
+  deleteStorage,
+  getStorageImage,
+  getStorageDetails
 }

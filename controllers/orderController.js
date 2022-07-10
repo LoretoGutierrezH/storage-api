@@ -22,9 +22,9 @@ const getOrderDetails = async (req, res, next) => {
   console.log(order)
   if (!order) return utilErrorHandler(order, next)
 
-  const isUserInDatabase = await User.findById(order.user)
+  const user = await User.findById(order.user)
 
-  if (isUserInDatabase) {
+  if (user) {
    await order.populate('user')
   }
 
@@ -43,14 +43,14 @@ const newOrder = async (req, res, next) => {
   const storageAvailability = (await Storage.findById(req.body.services.storage)).available
 
   if (!storageAvailability) {
-    const err = new Error('That storage alternative was already scheduled for another user.')
+    const err = new Error('That storage alternative is already scheduled for another user.')
     return utilErrorHandler(null, next, err)
   }
   
   const data = {
     status: 'pending',
     user: userId,
-    rentTime: req.body.rentTime,
+    rentalPeriod: req.body.rentalPeriod,
     services: req.body.services,
   }
 
@@ -70,6 +70,7 @@ const updateOrderStatus = (req, res) => {
 
 }
 
+//for dev purposes
 const deleteAllOrders = async (req, res) => {
   const orders = await Order.find().deleteMany()
 

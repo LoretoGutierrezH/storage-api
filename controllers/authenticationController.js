@@ -2,17 +2,16 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const {utilErrorHandler} = require('../middlewares/errorHandler')
 
-const signUp = async (req, res) => {
+const signUp = async (req, res, next) => {
   const user = new User(req.body) 
   await user.save()
   //after sign-up user should be logged in automatically
+  const token = user.getSessionToken()
   return res.json({
     status: 'success',
     data: {
-      newUser: {
-        ...user._doc,
-        password: 'hashed password placeholder'
-      }
+      user,
+      token
     }
     
   })

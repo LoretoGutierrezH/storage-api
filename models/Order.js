@@ -28,7 +28,7 @@ const schema = mongoose.Schema({
 })
 
 //updating storage availability and setting total (just storage price, for now)
-//TODO: Logic for storage availability according to desired scheduled rentPeriod start and end. 
+//TODO: Logic for storage availability according to desired scheduled rentalPeriod start and end. 
 schema.pre('save', function (next) {
   const storage = Storage.findByIdAndUpdate(this.services.storage, { available: false }, (err, doc) => {
     if (err) return utilErrorHandler(null, next, err)

@@ -64,6 +64,12 @@ schema.pre('save', function(next)  {
   })
 })
 
+schema.methods.toJSON = function() {
+  const obj = this.toObject()
+  delete obj.password
+  return obj
+}
+
 //User authentication
 schema.methods.isCorrectPassword = function (password) {
   return bcrypt.compareSync(password, this.password)

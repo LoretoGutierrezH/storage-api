@@ -32,6 +32,11 @@ const schema = mongoose.Schema({
   }
 })
 
+schema.methods.toJSON = function() {
+  const obj = this.toObject()
+  delete obj.image
+  return obj
+}
 
 const model = mongoose.model('storage', schema)
 
