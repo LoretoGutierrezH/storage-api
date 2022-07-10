@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'dev') {
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log('DB connection successful')
-  server.listen('3000', () => {
+  server.listen(process.env.PORT, () => {
     console.log('Server running on port 3000')
   })
 })
