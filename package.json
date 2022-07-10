@@ -22,7 +22,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=dev nodemon server.js",
-    "start": "cross-env NODE_ENV=prod nodemon server.js"
+    "prod": "cross-env NODE_END=prod nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
