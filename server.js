@@ -2,7 +2,6 @@ const http = require('http')
 const mongoose = require('mongoose')
 const app = require('./config/app')
 const dotenv = require('dotenv')
-//const dotenv = require('dotenv').config()  .config() sets process.env to default .env file
 
 const server = http.createServer(app)
 if (process.env.NODE_ENV === 'prod') {
