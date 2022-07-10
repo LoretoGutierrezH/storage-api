@@ -66,9 +66,6 @@ const newOrder = async (req, res, next) => {
   })
 }
 
-const updateOrderStatus = (req, res) => {
-
-}
 
 //for dev purposes
 const deleteAllOrders = async (req, res) => {
@@ -82,13 +79,39 @@ const deleteAllOrders = async (req, res) => {
   })
 }
 
-const deleteOrder = (req, re) => {
+const updateOrderStatus = async (req, res, next) => {
+  const id = req.params.id
+  const status = req.body.status
+  const validStatus = ['scheduled', 'cancelled', 'fulfilled']
+  const isValidStatus = validStatus.includes(status)
 
+  if (!isValidStatus) {
+    const err = new Error('Invalid update status.')
+    return utilErrorHandler(null, next, err)
+  }
+
+  const order = await Order.findByIdAndUpdate(id, { status }, { new: true})
+
+  if (!order) {
+    return utilErrorHandler(order, next)
+  }
+
+  if (order.status === 'fulfilled' || order.status === 'cancelled') {
+    const storageId = order.services.storage
+    await Storage.findByIdAndUpdate(storageId, { available: true})
+  }
+
+  res.json({
+    order
+  })
 }
+
+
 
 module.exports = {
   newOrder,
   getOrders,
   getOrderDetails,
-  deleteAllOrders
+  deleteAllOrders,
+  updateOrderStatus
 }

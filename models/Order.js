@@ -4,7 +4,8 @@ const Storage = require('./Storage')
 
 const schema = mongoose.Schema({
   status: {
-    type: 'string' // pending, scheduled, fullfilled
+    type: 'string',
+    enum: ['pending', 'scheduled', 'cancelled', 'fulfilled']  // enum pending, scheduled, fulfilled
   },
   user: {
     type: 'objectId',
