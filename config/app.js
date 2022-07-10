@@ -1,5 +1,5 @@
 const express = require('express')
-const morgan = require('morgan')
+//const morgan = require('morgan')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const v1Router = require('../routers/v1/index')
@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 //Attaching morgan for debugging
-app.use(morgan('dev'))
+//app.use(morgan('dev'))
 
 //Attaching File Upload
 app.use(fileUpload({
