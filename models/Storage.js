@@ -5,7 +5,7 @@ const schema = mongoose.Schema({
     type: 'string',
     required: true,
     unique: true
-  },
+  }/* ,
   type: {
     type: 'string',
     required: true
@@ -13,7 +13,7 @@ const schema = mongoose.Schema({
   description: {
     type: 'string',
     required: true
-  },
+  } */,
   dimensions: {
     type: 'number',
     required: true
@@ -29,10 +29,14 @@ const schema = mongoose.Schema({
   image: {
     data: Buffer,
     contentType: String
+  },
+  category: {
+    type: 'objectId',
+    ref: 'category'
   }
 })
 
-schema.methods.toJSON = function() {
+schema.methods.toJSON = function () {
   const obj = this.toObject()
   delete obj.image
   return obj
