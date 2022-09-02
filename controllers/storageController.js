@@ -17,7 +17,7 @@ const newStorage = async (req, res) => {
     storage.image.data = req.files.image.data
     storage.image.contentType = req.files.image.mimetype
   }
- 
+
   await storage.save()
 
   return res.json({
@@ -27,7 +27,7 @@ const newStorage = async (req, res) => {
 
 const getStorageDetails = async (req, res, next) => {
   const storageId = req.params.id
-  const storage = await Storage.findById(storageId)
+  const storage = await Storage.findById(storageId).populate('category')
   if (!storage) return utilErrorHandler(storage, next)
 
   return res.json({

@@ -5,15 +5,7 @@ const schema = mongoose.Schema({
     type: 'string',
     required: true,
     unique: true
-  }/* ,
-  type: {
-    type: 'string',
-    required: true
   },
-  description: {
-    type: 'string',
-    required: true
-  } */,
   dimensions: {
     type: 'number',
     required: true
@@ -32,7 +24,8 @@ const schema = mongoose.Schema({
   },
   category: {
     type: 'objectId',
-    ref: 'category'
+    ref: 'category',
+    required: true
   }
 })
 
