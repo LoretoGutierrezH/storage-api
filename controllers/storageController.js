@@ -1,5 +1,7 @@
 const { utilErrorHandler } = require('../middlewares/errorHandler')
 const Storage = require('../models/Storage')
+const Category = require('../models/Category')
+const mongoose = require('mongoose')
 
 const getStorageUnits = async (req, res) => {
   const storageAlternatives = await Storage.find()
@@ -12,6 +14,9 @@ const getStorageUnits = async (req, res) => {
 
 const newStorage = async (req, res) => {
   const storage = new Storage(req.body)
+  const id = storage.id
+  console.log(mongoose.isValidObjectId(storage.id))
+  const category = await Category.findByIdAndUpdate(req.body.category, { "$push": { "products": id } }, { new: true })
 
   if (req.files) {
     storage.image.data = req.files.image.data
