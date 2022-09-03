@@ -6,6 +6,11 @@ const schema = mongoose.Schema({
     required: true,
     unique: true
   },
+  category: {
+    type: 'objectId',
+    ref: 'category',
+    required: true
+  },
   dimensions: {
     type: 'number',
     required: true
@@ -14,18 +19,23 @@ const schema = mongoose.Schema({
     type: 'number',
     required: true
   },
-  available: {
-    type: 'bool',
+  availability: {
+    type: 'object',
+    unitsAvailable: {
+      type: 'number',
+      required: true
+    },
+    isAvailable: {
+      type: 'boolean',
+      required: true
+    },
+    reservationDates: [{ type: 'object', quantity: 'number', startDate: 'date', endDate: 'date' }],
     required: true
+
   },
   image: {
     data: Buffer,
     contentType: String
-  },
-  category: {
-    type: 'objectId',
-    ref: 'category',
-    required: true
   }
 })
 
