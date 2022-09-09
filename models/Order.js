@@ -12,19 +12,22 @@ const schema = mongoose.Schema({
     required: true,
     ref: 'user'
   },
-  rentalPeriod: {  // rentalPeriod in weeks - min rentTime = 2 weeks 
-    type: 'number',
+  rentalPeriod: {
+    type: 'object',
+    startDate: 'date',
+    endDate: 'date',
+    period: 'number',
     required: true
   },
   services: {
     type: 'object',
-    storage: { type: 'objectId', ref: 'storage' },
-    additionalServices: [{type: 'objectId', ref: 'additionalService'}], //TODO: Implement add. services
+    storageUnits: [{ type: 'objectId', ref: 'storage', required: true }],
+    additionalServices: [{ type: 'objectId', ref: 'additionalService' }], //TODO: Implement add. services
     required: true,
   },
   total: {
     type: 'number',
-   /*  required: true */
+    /*  required: true */
   }
 })
 

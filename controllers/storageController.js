@@ -41,7 +41,7 @@ const getStorageDetails = async (req, res, next) => {
 }
 
 
-const updateStorage = (req, res) => {
+const addStorageToCategoryProducts = (req, res) => {
 
 }
 
@@ -53,6 +53,17 @@ const deleteStorage = async (req, res) => {
 
   return res.json({
     remainingStorageAlternatives
+  })
+}
+
+const deleteAllStorageUnits = async (req, res) => {
+  const storages = await Storage.find().deleteMany()
+
+  return res.json({
+    status: 'success',
+    data: {
+      storages: []
+    }
   })
 }
 
@@ -73,5 +84,6 @@ module.exports = {
   getStorageUnits,
   deleteStorage,
   getStorageImage,
-  getStorageDetails
+  getStorageDetails,
+  deleteAllStorageUnits
 }

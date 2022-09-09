@@ -12,26 +12,27 @@ const schema = mongoose.Schema({
     required: true
   },
   dimensions: {
-    type: 'number',
-    required: true
-  },
-  price: {
-    type: 'number',
-    required: true
-  },
-  availability: {
     type: 'object',
-    unitsAvailable: {
-      type: 'number',
-      required: true
-    },
-    isAvailable: {
-      type: 'boolean',
-      required: true
-    },
-    reservationDates: [{ type: 'object', quantity: 'number', startDate: 'date', endDate: 'date' }],
+    width: 'number',
+    height: 'number',
+    depth: 'number',
     required: true
-
+  },
+  equivalentSize: {
+    type: 'string',
+    required: true
+  },
+  usage: {
+    type: 'array',
+    required: true
+  },
+  monthlyPrice: {
+    type: 'number',
+    required: true
+  },
+  isAvailable: {
+    type: 'boolean',
+    required: true
   },
   image: {
     data: Buffer,
@@ -43,6 +44,10 @@ schema.methods.toJSON = function () {
   const obj = this.toObject()
   delete obj.image
   return obj
+}
+
+schema.methods.updateAvailability = function () {
+
 }
 
 const model = mongoose.model('storage', schema)
