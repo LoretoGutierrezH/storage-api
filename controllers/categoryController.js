@@ -54,6 +54,32 @@ const deleteAllProductsFromCategory = async (req, res) => {
   })
 }
 
+const addImageToCategory = async (req, res) => {
+  const id = req.params.id
+  let category;
+  if (req.files) {
+    category = await Category.findByIdAndUpdate(id, { image: { data: req.files.image.data, contentType: req.files.image.mimetype } })
+  }
+
+  res.json({
+    status: 'success',
+    data: {
+      category
+    }
+  })
+}
+
+const getCategoryImage = async (req, res, next) => {
+  const id = req.params.id
+  const category = await Category.findById(id)
+
+  if (!category) return utilErrorHandler(category, next)
+
+  res.set('Content-Type', category.image.contentType)
+  res.send(category.image.data)
+
+}
+
 /* const addStorageToCategoryProducts = async (req, res) => {
   const storageUnits = await Storage.find()
   let category;
@@ -73,5 +99,7 @@ module.exports = {
   newCategory,
   getCategories,
   getCategoryDetails,
-  deleteAllProductsFromCategory
+  deleteAllProductsFromCategory,
+  addImageToCategory,
+  getCategoryImage
 }

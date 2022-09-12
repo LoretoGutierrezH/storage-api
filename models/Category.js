@@ -10,7 +10,11 @@ const schema = mongoose.Schema({
     type: 'string',
     required: true
   },
-  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'storage' }]
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'storage' }],
+  image: {
+    data: Buffer,
+    contentType: String
+  }
 })
 
 const model = mongoose.model('category', schema)
