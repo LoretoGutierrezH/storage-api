@@ -79,6 +79,7 @@ const getStorageImage = async (req, res, next) => {
 }
 
 
+
 module.exports = {
   newStorage,
   getStorageUnits,

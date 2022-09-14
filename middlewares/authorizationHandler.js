@@ -1,4 +1,4 @@
-const {utilErrorHandler} = require('./errorHandler')
+const { utilErrorHandler } = require('./errorHandler')
 const jwt = require('jsonwebtoken')
 
 const authorize = (req, roles, next) => {  //Refactor with auth from request object

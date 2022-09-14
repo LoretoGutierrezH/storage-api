@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {utilErrorHandler} = require('./errorHandler')
+const { utilErrorHandler } = require('./errorHandler')
 
 const getCurrentUserId = (req, next) => {
   if (!req.headers.authorization) {
@@ -7,11 +7,11 @@ const getCurrentUserId = (req, next) => {
     return utilErrorHandler(null, next, err)
   }
   const filteredToken = req.headers.authorization.split(' ')[1]
-    return jwt.verify(filteredToken, process.env.SESSION_TOKEN_KEY, (err, decoded) => {
-      if (err) return next(err)
-      req.authInfo = decoded
-      return decoded.userId
-    })
+  return jwt.verify(filteredToken, process.env.SESSION_TOKEN_KEY, (err, decoded) => {
+    if (err) return next(err)
+    req.authInfo = decoded
+    return decoded.userId
+  })
 }
 
 const isAuth = (req, res, next) => {
@@ -23,7 +23,7 @@ const isAuth = (req, res, next) => {
 
 const renewToken = (req, res, next) => {
   const { iat, exp, ...payload } = req.authInfo
-  const token = jwt.sign(payload, process.env.SESSION_TOKEN_KEY, { expiresIn: process.env.SESSION_TOKEN_EXPIRATION})
+  const token = jwt.sign(payload, process.env.SESSION_TOKEN_KEY, { expiresIn: process.env.SESSION_TOKEN_EXPIRATION })
 
   return res.json({
     status: 'success',
@@ -34,4 +34,5 @@ const renewToken = (req, res, next) => {
 }
 
 
-module.exports = {getCurrentUserId, isAuth, renewToken}
+
+module.exports = { getCurrentUserId, isAuth, renewToken }

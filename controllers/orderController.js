@@ -15,6 +15,19 @@ const getOrders = async (req, res) => {
   })
 }
 
+const getUserOrders = async (req, res, next) => {
+  const id = req.params.id
+  const user = await User.findById(id)
+  const orders = await Order.find({ user: user._id })
+
+  res.json({
+    status: 'success',
+    data: {
+      orders
+    }
+  })
+
+}
 
 const getOrderDetails = async (req, res, next) => {
   const orderId = req.params.id
@@ -119,5 +132,6 @@ module.exports = {
   getOrders,
   getOrderDetails,
   deleteAllOrders,
-  updateOrderStatus
+  updateOrderStatus,
+  getUserOrders
 }

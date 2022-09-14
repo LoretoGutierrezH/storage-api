@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const {getUsers, getOneUser, newUser, deleteUser} = require('../../controllers/userController')
-const {signUp, logIn } = require('../../controllers/authenticationController')
+const { getUsers, getOneUser, newUser, deleteUser } = require('../../controllers/userController')
+const { signUp, logIn } = require('../../controllers/authenticationController')
 const authorize = require('../../middlewares/authorizationHandler')
 const { isAuth, renewToken } = require('../../middlewares/authenticationHandler')
-const {signUpValidator, logInValidator} = require('../../validators/validators')
+const { signUpValidator, logInValidator } = require('../../validators/validators')
 
 /**
  * @swagger
