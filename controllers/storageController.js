@@ -4,13 +4,17 @@ const Category = require('../models/Category')
 const mongoose = require('mongoose')
 
 const getStorageUnits = async (req, res) => {
-  const storageAlternatives = await Storage.find()
+  const storageAlternatives = await Storage.find().populate('category')
 
+  storageAlternatives.forEach(unit => {
+     unit._doc.category.image.data = 'hidden'
+  })
   return res.json({
     storages: storageAlternatives
   })
 
 }
+
 
 const newStorage = async (req, res) => {
   const storage = new Storage(req.body)
