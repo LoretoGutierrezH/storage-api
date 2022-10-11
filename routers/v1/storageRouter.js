@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { newStorage, getStorageUnits, deleteStorage, getStorageDetails, getStorageImage, deleteAllStorageUnits } = require('../../controllers/storageController')
+const { newStorage, getStorageUnits, deleteStorage, getStorageDetails, getStorageImage, deleteAllStorageUnits, updateStorageImage } = require('../../controllers/storageController')
 
 /**
  * @swagger
@@ -42,7 +42,7 @@ const { newStorage, getStorageUnits, deleteStorage, getStorageDetails, getStorag
  */
 
 router.route('/storages').get(getStorageUnits).post(newStorage).delete(deleteAllStorageUnits)
-router.route('/storage/:id').get(getStorageDetails).delete(deleteStorage)
+router.route('/storage/:id').get(getStorageDetails).delete(deleteStorage).patch(updateStorageImage)
 router.route('/storage/image/:id').get(getStorageImage)
 
 /**

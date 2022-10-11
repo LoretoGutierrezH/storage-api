@@ -1,6 +1,7 @@
 const Category = require('../models/Category')
 const { utilErrorHandler } = require('../middlewares/errorHandler')
 const Storage = require('../models/Category')
+const { json } = require('express')
 
 const newCategory = async (req, res, next) => {
   try {
@@ -38,6 +39,21 @@ const getCategoryDetails = async (req, res, next) => {
       category
     }
   })
+}
+
+const updateCategoryInfo = async (req, res, next) => {
+  const id = req.params.id
+  let category;
+  if (req.files) {
+    category = await Storage.findByIdAndUpdate(id, { displayName: req.body.displayName, description: req.body.description, image: { data: req.files.image.data, contentType: req.files.image.mimetype } }, { new: true })
+  } else {
+    category = await Category.findByIdAndUpdate(id, { displayName: req.body.displayName, description: req.body.description }, { new: true })
+  }
+
+  return res.json({
+    category
+  })
+
 }
 
 const deleteAllProductsFromCategory = async (req, res) => {
@@ -101,5 +117,6 @@ module.exports = {
   getCategoryDetails,
   deleteAllProductsFromCategory,
   addImageToCategory,
-  getCategoryImage
+  getCategoryImage,
+  updateCategoryInfo
 }

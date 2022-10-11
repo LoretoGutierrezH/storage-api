@@ -36,7 +36,7 @@ router.route('/user/:id').get((req, res, next) => authorize(req, ['admin'], next
 //Authentication
 router.route('/signup').post(signUpValidator, signUp)
 router.route('/login').post(logInValidator, logIn)
-router.route('/token/renew').get((req, res, next) => authorize(req, ['admin'], next), isAuth, renewToken)
+router.route('/token/renew').get((req, res, next) => authorize(req, ['admin', 'user'], next), isAuth, renewToken)
 
 
 /**

@@ -7,7 +7,7 @@ const getStorageUnits = async (req, res) => {
   const storageAlternatives = await Storage.find().populate('category')
 
   storageAlternatives.forEach(unit => {
-     unit._doc.category.image.data = 'hidden'
+    unit._doc.category.image.data = 'hidden'
   })
   return res.json({
     storages: storageAlternatives
@@ -82,7 +82,20 @@ const getStorageImage = async (req, res, next) => {
 
 }
 
+const updateStorageImage = async (req, res, next) => {
+  const id = req.params.id
+  let storage;
+  if (req.files) {
+    storage = await Storage.findByIdAndUpdate(id, { displayName: req.body.displayName, image: { data: req.files.image.data, contentType: req.files.image.mimetype } }, { new: true })
+  }
 
+  await storage.save()
+
+  return res.json({
+    storage
+  })
+
+}
 
 module.exports = {
   newStorage,
@@ -90,5 +103,6 @@ module.exports = {
   deleteStorage,
   getStorageImage,
   getStorageDetails,
-  deleteAllStorageUnits
+  deleteAllStorageUnits,
+  updateStorageImage
 }
